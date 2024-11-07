@@ -1,0 +1,52 @@
+<script>
+  const calcPoint = (pointInfo, productPrice) => {
+    const rate = pointInfo.point_rate / 100;
+    const point = Math.floor(rate * productPrice);
+    return point;
+  }
+
+  document.addEventListener('DOMContentLoaded', async function() {
+
+    const apiBaseUrl = "https://point-app-api-server-prod-1064322126758.asia-northeast1.run.app";
+    const shopifyDefaultDomain = {{ shop.domain | json }};
+    const response = await fetch(`${apiBaseUrl}/merchant-point-info/${shopifyDefaultDomain}`, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    const pointInfo = await response.json();
+
+    const productPrice = {{ product.price | money_without_currency | replace: ',', '' }};
+    const point = calcPoint(pointInfo, productPrice);
+
+    const sectionDiv = document.getElementById('point-info');
+    const storeOriginalPoint = sectionDiv.querySelector('#store-original-point');
+
+    storeOriginalPoint.textContent = point.toString();
+  });
+
+</script>
+
+<style>
+  .store-original-point {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    width: fit-content;
+  }
+
+</style>
+
+<div id="point-info">
+    <p class="store-original-point">獲得ポイント: <span id="store-original-point">p</span></p>
+</div>
+
+{% schema %}
+{
+  "name": "Point Acquisition",
+  "target": "section",
+  "settings": [],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

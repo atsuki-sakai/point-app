@@ -1,0 +1,29 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "cbf18f070e4e95e9b1b7bf9e19e12ef9"
+name = "point app"
+handle = "point-app-6"
+application_url = "https://markets-host-pair-poker.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "kobe-pottery.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "read_product_listings,read_products,read_themes,write_product_listings,write_products,write_themes"
+
+[auth]
+redirect_urls = [
+  "https://markets-host-pair-poker.trycloudflare.com/auth/callback",
+  "https://markets-host-pair-poker.trycloudflare.com/auth/shopify/callback",
+  "https://markets-host-pair-poker.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2024-10"
+
+[pos]
+embedded = false
